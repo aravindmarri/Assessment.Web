@@ -33,6 +33,7 @@ interface IState{
     dialogButtons: DialogButton[];
     isCancelled: boolean;
     imageList: string[];
+    pageChangeTimer: number;
 }
 interface IProps {
     app: AppService;
@@ -40,6 +41,7 @@ interface IProps {
 }
 
 class Examination extends React.Component<IProps,IState> {
+    
 
     private readonly questionService = new PersonalInformationService();
     private examineeDetails: string | null = null
@@ -59,14 +61,24 @@ class Examination extends React.Component<IProps,IState> {
             description: '',
             dialogButtons: [],
             isCancelled: false,
-            imageList: []
+            imageList: [],
+            pageChangeTimer: 0
         }
+      
     }
     navigateToDenied = () => {
         this.props.router.push(routerPathKey.denied);
     }
+
+    setSidebarState(event: number) {
+        this.setState({currentQuestionIndex: event, pageChangeTimer: Date.now()});
+    }
     componentDidMount = () => {
         this.examineeDetails = localStorage.getItem(storageKey.examineeDetails);
+
+        window.addEventListener('beforeunload', (event) => {
+            event.returnValue = 'Are you sure you want to leave?';
+          });
 
         if(!this.examineeDetails) {
             this.navigateToDenied();
@@ -132,8 +144,10 @@ class Examination extends React.Component<IProps,IState> {
 
     finalSubmit(isCancelled: boolean) {
         if(isCancelled) {
-            this.submitAnswers();
-            this.setState({isCancelled})
+            const dialogButtons: DialogButton[] = [];
+            dialogButtons.push({name: 'Ok', type: DialogButtonType.yes});
+            this.setState({open: true, title: '<span class="danger-text">You have attempted maximum number of violations.</span>', description: 'Your examination will be submitted.', dialogButtons, isCancelled})
+                this.setState({isCancelled})
         }else {
         const dialogButtons: DialogButton[] = [];
         dialogButtons.push({name: 'Yes', type: DialogButtonType.yes});
@@ -147,7 +161,9 @@ class Examination extends React.Component<IProps,IState> {
         if(e === DialogButtonType.yes) {
             this.submitAnswers();
         }
-
+        if(this.state.isCancelled) {
+            this.submitAnswers();
+        }
     }
 
     submitAnswers() {
@@ -201,10 +217,10 @@ class Examination extends React.Component<IProps,IState> {
                 <LeftSidebar className={styles.maxWidth340}  questions={this.state.quizData.length > this.state.currentCategoryIndex &&
                 this.state.quizData[this.state.currentCategoryIndex].questions ? this.state.quizData[this.state.currentCategoryIndex].questions : []}
                              currentIndex={this.state.currentQuestionIndex}
-                             handleSidebarButton={(event: number) => this.setState({currentQuestionIndex: event})}
+                             handleSidebarButton={(event: number) => this.setSidebarState(event)}
                              answeredData={this.state.answersData}
                 />
-                <Question categoryId={this.state.quizData[this.state.currentCategoryIndex]?.categoryId}
+                <Question pageChangeTimer={this.state.pageChangeTimer} categoryId={this.state.quizData[this.state.currentCategoryIndex]?.categoryId}
                           questions={this.state.quizData.length > this.state.currentCategoryIndex &&
                           this.state.quizData[this.state.currentCategoryIndex].questions
                 && this.state.quizData[this.state.currentCategoryIndex].questions.length > this.state.currentQuestionIndex

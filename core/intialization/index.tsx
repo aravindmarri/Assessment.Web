@@ -42,10 +42,12 @@ class IntializationInner extends React.Component<IProps, IState> {
                 this.props.dispatch(actionCreators.violationCreators.decrementViolation());
                 let violationLeft = this.props.selector.violations - 1;
                 violationLeft = violationLeft < 0 ? 0 : violationLeft;
+                if(violationLeft > 0) {
                 this.setState({open: true,
-                    title: violationLeft === 0 ? '<span class="danger-text">Examination is cancelled</span>' : 'Violation is captured by the system!',
-                    description: violationLeft === 0 ? 'You have exceeded maximum number of violations' : `Your examination will be cancelled after <strong class="danger-text">${violationLeft}</strong> violation ${violationLeft <=1 ? 'attempt' :'attempts'}.<br/>
+                    title: 'Violation is captured by the system!',
+                    description: `Your examination will be cancelled after <strong class="danger-text">${violationLeft}</strong> violation ${violationLeft <=1 ? 'attempt' :'attempts'}.<br/>
 <strong class="danger-text"> Make sure you don't close exam tab or open any other tab.</strong>` });
+                }
                 this.changeInTab = false;
             }
         }

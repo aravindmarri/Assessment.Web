@@ -165,9 +165,7 @@ class PermissionsInner extends React.Component<IProps, IState> {
                if(!this.state.cancelled) {
                    this.props.submitExamOnCancel();
                }
-                this.setState({violationLeft, open: true, title: `<span class="danger-text">Examination is cancelled</span>`, description:
-                        `You have exceeded maximum number of violations`, cancelled: true});
-            } else {
+                         } else {
                 this.setState({violationLeft, open: true, title: 'Violation is captured by the system!', description:
                         `Your examination will be cancelled after <strong class="danger-text">${violationLeft}</strong> violation ${violationLeft <=1 ? 'attempt' :'attempts'}.<br/>
 <strong class="danger-text"> Make sure your face is centred in camera and should only have one face.</strong>`});

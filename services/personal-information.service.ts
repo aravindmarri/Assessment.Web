@@ -3,7 +3,7 @@ import { SubmitExamPayload } from "../core/models/question.model";
 import { PersonalInfoPayload } from "../pages/personal-information";
 
 export class PersonalInformationService {
-    private readonly apiUrl = "https://assessmentapi.gsstech.website/";
+    private readonly apiUrl = process.env.NEXT_PUBLIC_API_URL;
 
     verifyLinkCode = (link: string) => axios.get(`${this.apiUrl}linkcode/${link}`)
 

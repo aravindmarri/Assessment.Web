@@ -4,6 +4,7 @@ import  styles from '../../../../styles/examination.module.scss';
 import Permissions from '../../../components/Permissions'
 import TimerIcon from '@mui/icons-material/Timer';
 import AlertDialog, { DialogButtonType } from "../../../shared-components/dialog";
+import { routerPathKey } from "../../../keys/router-path.key";
 interface IProps {
     className: string;
     categories: string[];
@@ -47,7 +48,7 @@ export class Header extends React.Component<IProps,IState> {
             this.setState({remainigTime: this.getFormattedTime(availableTime < 0 ? 0 : availableTime)});
             if (availableTime <= 0) {
                 clearInterval(timer);
-                this.togglePopup()
+                this.togglePopup(true)
 
             }
         }
@@ -62,9 +63,11 @@ export class Header extends React.Component<IProps,IState> {
         this.setState({open: false});
 
     }
-    togglePopup = () => {
+    togglePopup = (isFinished = false) => {
         this.setState(prevState => ({ open: !prevState.open }));
-
+        if(isFinished){
+            window.location.href = routerPathKey.successful;
+        }
     }
 
     render = () => {

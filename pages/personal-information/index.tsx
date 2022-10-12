@@ -75,11 +75,11 @@ class PersonalInformation extends React.Component<IProps, PersonalInfoState> {
 
     handleSubmit = (e: any) => {
         e.preventDefault();
-        this.props.app.showSpinner();
         if(this.examineeDetails) {
             this.setState({formErrors: this.validation(this.state.formValues)});
             setTimeout(() => {
                 if(Object.values(this.state.formErrors).filter(e => e.length > 0 ).length === 0) {
+                    this.props.app.showSpinner();
                     this.setState({isSubmit: true});
                     const payload = {} as PersonalInfoPayload;
                     payload.linkCode = this.examineeDetails?.linkCode || '';
@@ -92,7 +92,7 @@ class PersonalInformation extends React.Component<IProps, PersonalInfoState> {
                     payload.college = this.state.formValues.collegeName;
                     payload.percentage = Number(this.state.formValues.percentage);
                     payload.previousCompany = this.state.formValues.previousCompany;
-                    payload.experience = Number(this.state.formValues.experience);
+                    payload.experience = Math.abs(Number(this.state.formValues.experience));
                     this.personalInfoService.submitPersonalInfo(payload).then(res => {
                         this.props.app.showSpinner(false);
                         if(res && res.data) {
@@ -200,7 +200,8 @@ validation = (values: PersonalInfoForm) => {
                             </div>
                             <div>
                                 <label  className="block mb-2 text-sm font-medium">Aadhar Number</label>
-                                <input type="number" id=""
+                                <input type="tel" id=""
+                                pattern='[0-9]{12}'
                                        className="bg-gray-50 border border-gray-300 text-sm rounded-lg focus:ring-blue-500
             focus:border-blue-500 block w-full p-2.5 dark-bg dark:placeholder-gray-400
             dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" name='aadharNumber'
@@ -272,7 +273,7 @@ validation = (values: PersonalInfoForm) => {
                                 </label>
                                 <input className="appearance-none block w-full bg-gray-50 dark-bg border
                                  border-gray-200 rounded-lg py-3 px-4 leading-tight focus:outline-none focus:bg-white
-                                  focus:border-gray-500" id="grid-city" type="number"
+                                  focus:border-gray-500" id="grid-city" type="text"
                                        onChange={this.handleChange}
                                        name="experience"
                                        value={this.state.formValues.experience}

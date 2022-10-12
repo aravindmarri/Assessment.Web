@@ -10,18 +10,20 @@ categoryId: string;
 sendAnswer: (e: number) => void;
 currentAnswer: number;
 currentIndex: number;
+pageChangeTimer: number;
 }
 
 interface IState {
     description: string;
     code: string;
     currentValue: number;
+    pageChangeTimer: number;
 }
 export class Question extends React.Component<IProps,IState> {
     constructor(props: any) {
         super(props);
         this.state = {
-            description: '', code: '', currentValue: -1
+            description: '', code: '', currentValue: -1, pageChangeTimer: -1
         }
     }
     handleChange(event: string): void {
@@ -39,10 +41,12 @@ export class Question extends React.Component<IProps,IState> {
                code = splits[1];
            }
        }
-        return {description, code, currentValue: props.currentAnswer === -1 ? state.currentValue : [props.currentAnswer]}
+       return {description, code,
+         ...(state.pageChangeTimer !== props.pageChangeTimer && {currentValue:  props.currentAnswer === -1 ? state.currentValue : props.currentAnswer }),
+         ...(state.pageChangeTimer !== props.pageChangeTimer && {pageChangeTimer:  props.pageChangeTimer })
     }
 
-
+}
     render = () => {
 
         const { questions }= this.props;
@@ -54,7 +58,7 @@ export class Question extends React.Component<IProps,IState> {
                     </div>
                     <div className="overflow-y-auto question-scrollbar">
                     {this.state.code.length > 0 ? <div className="whitespace-pre bg-slate-200 p-1 rounded-lg">{this.state.code}</div>: ''}
-                    <div className={styles.AnswerHeading}>
+               <div className={styles.AnswerHeading}>
 
                         <FormControl>
                             <RadioGroup
