@@ -1,0 +1,169 @@
+@use 'variables/colors';
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+html,
+body {
+  padding: 0;
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
+    Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+* {
+  box-sizing: border-box;
+  width: 100%;
+  color: colors.$defaultText;
+}
+
+.css-zddlty-MuiButtonBase-root-MuiButton-root, .primary-button {
+  background-color: colors.$dark !important;
+  text-transform: none !important;
+}
+
+.primary-button{
+  border-radius: 30px !important;
+  max-width: 220px;
+}
+
+
+.light-bg {
+  background: colors.$light !important;
+  color: colors.$defaultText !important;
+}
+.light200-bg {
+  background: colors.$light200 !important;
+  color: colors.$defaultText !important;
+}
+.dark-bg {
+  background-color: colors.$dark !important;
+  color: colors.$white !important;
+  &:disabled {
+    background-color: colors.$grey !important;
+    cursor: not-allowed;
+  }
+}
+.disabled-bg, .disabled-bg:hover{
+  background: colors.$grey !important;
+  color: colors.$white !important;
+
+}
+.danger-bg, .danger-bg:hover{
+  background: colors.$danger !important;
+}
+
+.danger-text {
+  color: colors.$danger !important;
+}
+.h-15-vh {
+  height: 15vh;
+}
+.h-10-vh {
+  height: 10vh;
+}
+.h-75-vh {
+  height: 75vh;
+}
+.max-width-q-btn{
+  max-width: 36px;
+  width: 36px;
+  padding: 5px 0 !important;
+  min-width: 36px !important;
+  margin: 5px !important;
+  font-size: 12px !important;
+  font-weight: 600 !important;
+}
+
+/* width */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: colors.$grey100;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: colors.$dark;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: colors.$dark;
+}
+
+.video-view {
+  max-width: 290px;
+  border-radius: 68px;
+  padding: 2px;
+}
+.violation-text{
+  bottom: 5px;
+  right: 5px;
+  width: auto;
+  background: colors.$antiquewhite;
+  border-radius: 10px;
+  padding: 0 3px;
+  font-size: 12px;
+  font-weight: 500;
+  color: colors.$danger;
+}
+.video-view video {
+  height: 150px;
+}
+.camera-check-video-view{
+  height: 400px;
+  max-width: 530px;
+  margin: 0 auto;
+}
+
+.camera-check-video-view-text-wrapper{
+  max-width: 483px;
+  margin: 0 auto;
+}
+.video-view video, .camera-check-video-view {
+  object-fit: cover;
+  border-radius: 10px;
+  margin-top: 8px;
+  border: 4px solid colors.$dark;
+  background-color: colors.$dark;
+  transform: rotateY(180deg);
+  -webkit-transform:rotateY(180deg); /* Safari and Chrome */
+  -moz-transform:rotateY(180deg);
+}
+video {
+  pointer-events: none;
+}
+
+.camera-check-video-view-ul{
+  list-style: disc;
+  margin-left: 40px;
+}
+
+.camera-check-video-view-wrapper{
+  max-width: 700px;
+  margin: 0 auto;
+}
+.spinner-outer{
+  background: colors.$white;
+  opacity: 0.8;
+.spinner-img{
+  max-width: 180px;
+}
+}
+
+.denied-img{
+  max-width: 740px;
+}
+
+.question-scrollbar {
+  height: calc(100% - 40px);
+  padding: 20px 5px;
+}

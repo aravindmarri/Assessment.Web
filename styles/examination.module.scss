@@ -1,0 +1,117 @@
+@use 'variables/colors';
+.maxWidth340 {
+  max-width: 340px;
+
+}
+
+
+.headerOuter{
+  padding: 0 40px;
+}
+
+.submitButton{
+  max-width: 125px;
+}
+
+.matTimerIcon{
+  margin-right: 8px;
+}
+.timer{
+  width: max-content;
+  margin: 0 16px;
+  white-space: nowrap;
+  font-weight: 500;
+  color: colors.$green;
+}
+
+.stepperBar{
+  height: 5px;
+  background: colors.$light;
+  width: 60px;
+}
+
+.sideBarOuterDiv{
+  padding: 10px 10px 10px 40px;
+}
+.sideBarInnerDiv{
+  background: colors.$light;
+  flex: 1 1 100%;
+  padding: 40px 24px;
+}
+
+.inActiveButton{
+  background: colors.$inactive !important;
+  &:hover {
+    background: colors.$dark !important;
+  }
+}
+.answeredButton{
+  background: colors.$green !important;
+}
+
+.questionOuter{
+  padding: 10px 40px 10px 10px;
+  .questionInner{
+  padding: 16px;
+  background: colors.$light;
+  flex: 1 1 100%;
+    .questionDeepInner{
+      padding: 24px;
+      background: colors.$white;
+    }
+}
+}
+
+.innerFooter{
+  max-width: 70%;
+  margin: 0 auto 10px;
+  padding: 0 ;
+  display:flex;
+  justify-content: space-between;
+
+  button{
+    max-width: 180px;
+
+  }
+}
+.QuestionHeading{
+  font-size: 20px;
+  font-weight: bold;
+}
+.AnswerHeading{
+  margin-top: 10px;
+
+
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  .Answer{
+
+    color:black;
+    width: 200px;
+    padding:5px;
+    display:flex;
+    text-transform: capitalize;
+
+    input{
+      margin: 0px;
+
+
+    }
+
+
+  }
+}
+.FooterStyle{
+
+
+}
+.MainHeader{
+  min-height:100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  margin: 20px;
+
+}
+
