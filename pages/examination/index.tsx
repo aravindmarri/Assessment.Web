@@ -110,9 +110,9 @@ class Examination extends React.Component<IProps,IState> {
                 (this.state.currentCategoryIndex === this.state.quizData.length - 1 &&
                     this.state.currentQuestionIndex < this.state.quizData[this.state.currentCategoryIndex].questions.length - 1)) {
             if(this.state.quizData.length > 0 && nextQuestion < this.state.quizData[this.state.currentCategoryIndex].questions.length) {
-                this.setState({currentQuestionIndex: nextQuestion})
+                this.setState({currentQuestionIndex: nextQuestion, pageChangeTimer: Date.now()})
             } else {
-                this.setState({currentCategoryIndex: this.state.currentCategoryIndex + 1, currentQuestionIndex: 0});
+                this.setState({currentCategoryIndex: this.state.currentCategoryIndex + 1, currentQuestionIndex: 0, pageChangeTimer: Date.now()});
             }
         } else {
                 this.finalSubmit(false);
@@ -122,9 +122,9 @@ class Examination extends React.Component<IProps,IState> {
         const prevQuestion = this.state.currentQuestionIndex - 1;
         if(this.state.quizData.length > 0 && this.state.currentCategoryIndex > 0 || (this.state.currentCategoryIndex - 1 === -1 && this.state.currentQuestionIndex > 0)) {
             if(this.state.quizData.length > 0 && prevQuestion >= 0) {
-                this.setState({currentQuestionIndex: prevQuestion})
+                this.setState({currentQuestionIndex: prevQuestion,pageChangeTimer: Date.now()})
             } else {
-                this.setState({currentCategoryIndex: this.state.currentCategoryIndex - 1,
+                this.setState({currentCategoryIndex: this.state.currentCategoryIndex - 1, pageChangeTimer: Date.now(),
                     currentQuestionIndex: this.state.quizData[this.state.currentCategoryIndex].questions.length - 1});
             }
         }
