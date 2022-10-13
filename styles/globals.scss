@@ -167,3 +167,13 @@ video {
   height: calc(100% - 40px);
   padding: 20px 5px;
 }
+
+.exam-code-form{
+  display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    height: 100vh;
+    max-width: 500px;
+    margin:auto;
+}

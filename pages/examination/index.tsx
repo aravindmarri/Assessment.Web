@@ -78,7 +78,7 @@ class Examination extends React.Component<IProps,IState> {
 
         window.addEventListener('beforeunload', (event) => {
             event.returnValue = 'Are you sure you want to leave?';
-          });
+        });
 
         if(!this.examineeDetails) {
             this.navigateToDenied();
@@ -212,6 +212,7 @@ class Examination extends React.Component<IProps,IState> {
             <Header categories={this.state.quizData.map(e => e.categoryId)} className="h-15-vh" currentCategoryIndex={this.state.currentCategoryIndex}
                     outputCurrentIndex={(e: number) => this.setState({currentCategoryIndex: e, currentQuestionIndex: 0})}
                     finalSubmit={(e: boolean) => this.finalSubmit(e)} sendImageList={e => this.saveImageList(e)}
+                    finalSubmitOnTimeOut={() => this.onDialogClose(DialogButtonType.yes)}
             />
             <div className="flex flex-row h-75-vh">
                 <LeftSidebar className={styles.maxWidth340}  questions={this.state.quizData.length > this.state.currentCategoryIndex &&

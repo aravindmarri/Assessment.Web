@@ -11,6 +11,7 @@ interface IProps {
     currentCategoryIndex: number;
     outputCurrentIndex: (e: number) => void;
     finalSubmit: (e: boolean) => void;
+    finalSubmitOnTimeOut: () => void;
     sendImageList: (e: string[]) => void;
 }
 interface IState {
@@ -21,7 +22,7 @@ title:string;
 }
 export class Header extends React.Component<IProps,IState> {
 
-    private readonly duration = 30; // in minutes
+    private readonly duration = 20; // in minutes
     private finalTime = 0;
     constructor(props: IProps) {
         super(props);
@@ -30,7 +31,6 @@ export class Header extends React.Component<IProps,IState> {
             title: 'Timeout!',
             subtitle: 'Your examination is completed',
             open: false,
-
         }
     }
     getFormattedTime = (m: number) => {
@@ -66,7 +66,7 @@ export class Header extends React.Component<IProps,IState> {
     togglePopup = (isFinished = false) => {
         this.setState(prevState => ({ open: !prevState.open }));
         if(isFinished){
-            window.location.href = routerPathKey.successful;
+            this.props.finalSubmitOnTimeOut()
         }
     }
 
