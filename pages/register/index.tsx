@@ -1,4 +1,4 @@
-import {FormControlLabel, Radio, RadioGroup } from '@mui/material';
+
 import { AppProps } from 'next/app';
 import {NextRouter, useRouter } from 'next/router';
 import React from 'react';
@@ -20,6 +20,7 @@ class PersonalInfoForm {
     lastName = '';
     phoneNumber: string | number = '';
     aadharNumber: string | number = '';
+    email: string = '';
     collegeName = '';
     previousCompany = '';
     percentage: string | number = '';
@@ -75,31 +76,32 @@ class PersonalInformation extends React.Component<IProps, PersonalInfoState> {
 
     handleSubmit = (e: any) => {
         e.preventDefault();
-        if(this.examineeDetails) {
+        if(this.state) {
             this.setState({formErrors: this.validation(this.state.formValues)});
             setTimeout(() => {
                 if(Object.values(this.state.formErrors).filter(e => e.length > 0 ).length === 0) {
                     this.props.app.showSpinner();
                     this.setState({isSubmit: true});
                     const payload = {} as PersonalInfoPayload;
-                    payload.linkCode = this.examineeDetails?.linkCode || '';
+                    payload.linkCode = '00000000-0000-0000-0000-000000000000';
                     payload.name = this.state.formValues.firstName + ' ' + this.state.formValues.lastName;
                     payload.logTime = new Date().toISOString();
                     payload.aadhar = Number(this.state.formValues.aadharNumber);
-                    payload.email= this.examineeDetails?.email || '';
+                    payload.email= this.state.formValues.email;
                     payload.mobile = Number(this.state.formValues.phoneNumber);
                     payload.fresher = Number(this.state.formValues.experience) === 0;
                     payload.college = this.state.formValues.collegeName;
                     payload.percentage = Number(this.state.formValues.percentage);
                     payload.previousCompany = this.state.formValues.previousCompany;
                     payload.experience = Math.abs(Number(this.state.formValues.experience));
-                    this.personalInfoService.submitPersonalInfo(payload).then(res => {
+                    this.personalInfoService.submitPersonalInfo(payload).then((res: { data: any; }) => {
                         this.props.app.showSpinner(false);
                         if(res && res.data) {
+                            localStorage.setItem(storageKey.examineeDetails, JSON.stringify({linkCode: res.data.code, email: payload.email}));
                             localStorage.setItem(storageKey.questions, JSON.stringify(res.data.questions));
                             this.props.router.push(routerPathKey.cameraCheck);
                         }
-                    }).catch(error => {
+                    }).catch(() => {
                         this.props.app.showSpinner(false);
                     });
 
@@ -221,8 +223,8 @@ validation = (values: PersonalInfoForm) => {
             focus:border-blue-500 block w-full p-2.5 dark-bg dark:placeholder-gray-400
             dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" name='email'
                                    onChange={this.handleChange}
-                                   value={this.state.email}
-                                   readOnly
+                                   value={this.state.formValues.email}
+                                   required
                                    />
 
                         </div>
